@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Now</title>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 30px;
+        }
+
+        .vote-container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .vote-container label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .vote-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .vote-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .vote-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 600px) {
+            .vote-container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Vote for Your Favorite Candidate</h1>
+    <div class="vote-container">
+        <label for="candidate">Choose a candidate:</label>
+        <select id="candidate" name="candidate">
+            <option value="Candidate A">Candidate A</option>
+            <option value="Candidate B">Candidate B</option>
+            <option value="Candidate C">Candidate C</option>
+        </select>
+        <button onclick="vote()">Submit Vote</button>
+    </div>
+
+    <script>
+        function vote() {
+            const candidate = document.getElementById('candidate').value;
+    
+            // Send the vote to the server
+            fetch('http://localhost:3000/vote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ candidate })
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                window.location.href = "thankyou.html"; // Redirect to Thank You page
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to submit vote.');
+            });
+        }
+    </script>
+    
